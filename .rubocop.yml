@@ -1,0 +1,17 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  Exclude:
+    - bin/*
+    - vendor/**/*
+
+Layout/LineLength:
+  Max: 120
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Style/Documentation:
+  Enabled: false
