@@ -18,5 +18,9 @@ Pry.start
 # xml1 = '<alice>bob</alice>'
 # xml2 = '<alice><bob>charlie</bob><david>edgar</david></alice>'
 # xml3 = '<alice><bob>charlie</bob><bob>david</bob></alice>'
+# xml4 = '<alice charlie="david">bob</alice>'
+# xml5 = '<alice xmlns="http://some-namespace">bob</alice>'
+# xml6 = '<alice xmlns="http:\/\/some-namespace" xmlns:charlie="http:\/\/some-other-namespace">bob</alice>'
+# xml7 = '<alice xmlns="http://some-namespace" xmlns:charlie="http://some-other-namespace"> <bob>david</bob> <charlie:edgar>frank</charlie:edgar> </alice>'
 # xml = '<alice><bob>charlie</bob><bob>david</bob></alice>'
 # conv = Dachsfisch::XML2JSONConverter.new xml: xml
