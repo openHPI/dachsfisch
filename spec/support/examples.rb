@@ -33,11 +33,11 @@ module Examples
 
   class Example5
     def self.json
-      '{ "alice": { "bob" : { "$": "charlie" }, "david": { "$": "edgar"} } }'
+      '{ "alice": { "$" : "bob", "@charlie" : "david" } }'
     end
 
     def self.xml
-      '<alice><bob>charlie</bob><david>edgar</david></alice>'
+      '<alice charlie="david">bob</alice>'
     end
   end
 
