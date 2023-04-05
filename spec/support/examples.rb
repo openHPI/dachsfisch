@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Examples from http://www.sklar.com/badgerfish/
 module Examples
   class Example2
     def self.json
