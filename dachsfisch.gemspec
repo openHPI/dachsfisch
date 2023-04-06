@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = 'Implements a bidirectional converter for XML and JSON based on the badgerfish-specification'
   spec.homepage = 'https://github.com/openHPI/dachsfisch'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 3.2.0'
+  spec.required_ruby_version = '>= 3.2'
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
 
@@ -27,13 +27,18 @@ Gem::Specification.new do |spec|
       (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|circleci)|appveyor)})
     end
   end
+
   spec.bindir = 'exe'
-  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  spec.executables = spec.files.grep(%r{\Aexe/}) {|f| File.basename(f) }
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '~> 1.21'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.18.1'
+  spec.add_development_dependency 'rspec-github', '~> 2.4.0'
+  spec.add_development_dependency 'rubocop', '~> 1.49.0'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.16.0'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.19.0'
+  spec.add_development_dependency 'simplecov', '~> 0.22.0'
+
   spec.metadata['rubygems_mfa_required'] = 'true'
 end
