@@ -102,4 +102,15 @@ module Examples
       '<alice><![CDATA[<bob></bob>]]></alice>'
     end
   end
+
+  def self.all
+    constants.filter_map do |constant|
+      c = const_get(constant)
+      c if c.is_a?(Class)
+    end
+  end
+
+  def self.each(&)
+    all.each(&)
+  end
 end
