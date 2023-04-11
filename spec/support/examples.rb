@@ -85,7 +85,7 @@ module Examples
 
   class CustomExampleComment
     def self.json
-      '{"alice":{"#":"my comment"}}'
+      '{"alice":{"!":"my comment"}}'
     end
 
     def self.xml
@@ -95,7 +95,7 @@ module Examples
 
   class CustomExampleCdata
     def self.json
-      '{"alice":{"!":"<bob></bob>"}}'
+      '{"alice":{"#":"<bob></bob>"}}'
     end
 
     def self.xml
