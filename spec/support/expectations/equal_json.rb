@@ -13,8 +13,6 @@ RSpec::Matchers.define :be_an_equal_json_as do |json2|
     end
   end
   failure_message do |actual|
-    # :nocov:
     "#{actual} is not equal to \n#{json2}."
-    # :nocov:
   end
 end
