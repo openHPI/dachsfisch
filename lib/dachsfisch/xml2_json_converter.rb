@@ -16,22 +16,33 @@ module Dachsfisch
       add_namespaces_to_active_namespaces(active_namespaces, node)
       hash['@xmlns'] = active_namespaces unless active_namespaces.empty?
       node.children.each do |child|
-        case child.class.to_s # use string representation because CData inherits Text
-        when 'Nokogiri::XML::Text'
-          hash[next_key_index hash, '$'] = child.text unless child.text.strip.empty?
-        when 'Nokogiri::XML::Comment'
-          hash[next_key_index hash, '#'] = child.text unless child.text.strip.empty?
-        when 'Nokogiri::XML::CDATA'
-          hash[next_key_index hash, '!'] = child.text unless child.text.strip.empty?
-        else
-          add_value_to_hash(hash, child, active_namespaces)
-        end
+        handle_content(hash, child, active_namespaces)
         handle_attributes(hash, node)
       end
       hash
     end
 
     private
+
+    def handle_content(hash, child, active_namespaces)
+      case child.class.to_s # use string representation because CData inherits Text
+        when 'Nokogiri::XML::Text'
+          add_text_with_custom_key(hash, child, '$')
+        when 'Nokogiri::XML::Comment'
+          add_text_with_custom_key(hash, child, '#')
+        when 'Nokogiri::XML::CDATA'
+          add_text_with_custom_key(hash, child, '!')
+        else
+          add_value_to_hash(hash, child, active_namespaces)
+      end
+    end
+
+    def add_text_with_custom_key(hash, child, base_key)
+      unless child.text.strip.empty?
+        child_key = next_key_index hash, base_key
+        hash[child_key] = child.text
+      end
+    end
 
     def add_value_to_hash(hash, child, active_namespaces)
       child_key = child.namespace&.prefix.nil? ? child.name : "#{child.namespace.prefix}:#{child.name}"
