@@ -29,9 +29,9 @@ module Dachsfisch
         when 'Nokogiri::XML::Text'
           add_text_with_custom_key(hash, child, '$')
         when 'Nokogiri::XML::Comment'
-          add_text_with_custom_key(hash, child, '#')
-        when 'Nokogiri::XML::CDATA'
           add_text_with_custom_key(hash, child, '!')
+        when 'Nokogiri::XML::CDATA'
+          add_text_with_custom_key(hash, child, '#')
         else
           add_value_to_hash(hash, child, active_namespaces)
       end
