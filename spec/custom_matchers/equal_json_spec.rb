@@ -15,6 +15,11 @@ RSpec.describe 'equal_json matcher' do
     it 'fails' do
       expect(string).not_to be_an_equal_json_as integer
     end
+
+    it 'provides a useful error message' do
+      expect { expect(string).to be_an_equal_json_as integer }
+        .to raise_error(RSpec::Expectations::ExpectationNotMetError, /not equal to/)
+    end
   end
 
   context 'when one of the strings does not contain valid json' do
@@ -23,6 +28,11 @@ RSpec.describe 'equal_json matcher' do
     it 'fails' do
       expect(json).not_to be_an_equal_json_as json2
     end
+
+    it 'provides a useful error message' do
+      expect { expect(json).to be_an_equal_json_as json2 }
+        .to raise_error(RSpec::Expectations::ExpectationNotMetError, /not equal to/)
+    end
   end
 
   context 'when one json string is different' do
@@ -30,6 +40,11 @@ RSpec.describe 'equal_json matcher' do
 
     it 'fails the comparison' do
       expect(json).not_to be_an_equal_json_as json2
+    end
+
+    it 'provides a useful error message' do
+      expect { expect(json).to be_an_equal_json_as json2 }
+        .to raise_error(RSpec::Expectations::ExpectationNotMetError, /not equal to/)
     end
   end
 end

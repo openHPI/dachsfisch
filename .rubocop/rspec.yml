@@ -13,6 +13,10 @@ RSpec/DescribeClass:
   Exclude:
     - "spec/custom_matchers/*"
 
+RSpec/MultipleExpectations:
+  Exclude:
+    - "spec/custom_matchers/*"
+
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
