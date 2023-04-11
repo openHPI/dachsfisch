@@ -16,20 +16,19 @@ module Dachsfisch
       add_namespaces_to_active_namespaces(active_namespaces, node)
       hash['@xmlns'] = active_namespaces unless active_namespaces.empty?
       node.children.each do |child|
-        if child.is_a?(Nokogiri::XML::Text)
-          hash['$'] = child.text unless child.text.strip.empty?
+        case child.class.to_s # use string representation because CData inherits Text
+        when 'Nokogiri::XML::Text'
+          hash[next_key_index hash, '$'] = child.text unless child.text.strip.empty?
+        when 'Nokogiri::XML::Comment'
+          hash[next_key_index hash, '#'] = child.text unless child.text.strip.empty?
+        when 'Nokogiri::XML::CDATA'
+          hash[next_key_index hash, '!'] = child.text unless child.text.strip.empty?
         else
           add_value_to_hash(hash, child, active_namespaces)
         end
         handle_attributes(hash, node)
       end
       hash
-    end
-
-    def convert_namespace_key(key)
-      return '$' if key == 'xmlns'
-
-      key[6..]
     end
 
     private
@@ -59,6 +58,18 @@ module Dachsfisch
         ns_key = convert_namespace_key key
         active_namespaces[ns_key] = url unless active_namespaces.key?(ns_key)
       end
+    end
+
+    def convert_namespace_key(key)
+      return '$' if key == 'xmlns'
+
+      key.delete_prefix 'xmlns:'
+    end
+
+    def next_key_index(hash, base_key)
+      key_count = hash.keys.count {|k| k[0] == base_key }
+
+      "#{base_key}#{key_count.zero? ? '' : key_count + 1}"
     end
   end
 end

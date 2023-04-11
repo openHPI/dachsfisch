@@ -69,5 +69,32 @@ RSpec.describe Dachsfisch::XML2JSONConverter do
         expect(json).to be_an_equal_json_as(example.json)
       end
     end
+
+    context 'with multiple text nodes' do
+      let(:example) { Examples::CustomExampleMultipleTextNodes }
+      let(:xml) { example.xml }
+
+      it 'converts to correct json' do
+        expect(json).to be_an_equal_json_as(example.json)
+      end
+    end
+
+    context 'with a comment' do
+      let(:example) { Examples::CustomExampleComment }
+      let(:xml) { example.xml }
+
+      it 'converts to correct json' do
+        expect(json).to be_an_equal_json_as(example.json)
+      end
+    end
+
+    context 'with cdata' do
+      let(:example) { Examples::CustomExampleCdata }
+      let(:xml) { example.xml }
+
+      it 'converts to correct json' do
+        expect(json).to be_an_equal_json_as(example.json)
+      end
+    end
   end
 end
