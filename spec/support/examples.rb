@@ -72,4 +72,34 @@ module Examples
     end
   end
   # rubocop:enable Layout/LineLength
+
+  class CustomExampleMultipleTextNodes
+    def self.json
+      '{"alice":{"$":"bob","charlie":{"$":"bob2"},"$2":"bob3"}}'
+    end
+
+    def self.xml
+      '<alice>bob<charlie>bob2</charlie>bob3</alice>'
+    end
+  end
+
+  class CustomExampleComment
+    def self.json
+      '{"alice":{"#":"my comment"}}'
+    end
+
+    def self.xml
+      '<alice><!--my comment--></alice>'
+    end
+  end
+
+  class CustomExampleCdata
+    def self.json
+      '{"alice":{"!":"<bob></bob>"}}'
+    end
+
+    def self.xml
+      '<alice><![CDATA[<bob></bob>]]></alice>'
+    end
+  end
 end
