@@ -38,9 +38,9 @@ module Dachsfisch
     end
 
     def add_text_with_custom_key(hash, child, base_key)
-      unless child.text.strip.empty?
+      if !child.text.strip.empty? || child.text.strip == child.text
         child_key = next_key_index hash, base_key
-        hash[child_key] = child.text
+        hash[child_key] = child.text.strip
       end
     end
 

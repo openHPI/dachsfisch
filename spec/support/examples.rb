@@ -113,6 +113,32 @@ module Examples
     end
   end
 
+  class CustomExampleCdataEmpty
+    def self.json
+      '{"alice":{"#":""}}'
+    end
+
+    def self.xml
+      '<alice><![CDATA[]]></alice>'
+    end
+  end
+
+  class CustomExampleFormattedXml
+    def self.json
+      '{"alice":{"bob":{"$":"charlie"}}}'
+    end
+
+    def self.xml
+      <<~XML
+        <alice>
+          <bob>
+            charlie
+          </bob>
+        </alice>
+      XML
+    end
+  end
+
   def self.all
     constants.filter_map do |constant|
       c = const_get(constant)
