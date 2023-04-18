@@ -103,6 +103,16 @@ module Examples
     end
   end
 
+  class CustomExampleLargerArray
+    def self.json
+      '{ "alice": { "bob" : [{"$": "charlie" }, {"$": "david" }, {"$": "edgar" }] } }'
+    end
+
+    def self.xml
+      '<alice><bob>charlie</bob><bob>david</bob><bob>edgar</bob></alice>'
+    end
+  end
+
   def self.all
     constants.filter_map do |constant|
       c = const_get(constant)
