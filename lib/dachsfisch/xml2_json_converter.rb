@@ -80,7 +80,7 @@ module Dachsfisch
     def next_key_index(hash, base_key)
       key_count = hash.keys.count {|k| k.start_with? base_key }
 
-      "#{base_key}#{key_count.zero? ? '' : key_count + 1}"
+      "#{base_key}#{key_count + 1}"
     end
   end
 end
