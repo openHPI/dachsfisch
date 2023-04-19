@@ -40,7 +40,7 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
       # }
     end
 
-    xcontext 'with example 5' do
+    context 'with example 5' do
       let(:example) { Examples::Example5 }
 
       it 'converts to correct xml' do
@@ -48,7 +48,7 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
       end
     end
 
-    xcontext 'with example 7' do
+    context 'with example 7' do
       let(:example) { Examples::Example7 }
 
       it 'converts to correct xml' do
@@ -56,7 +56,7 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
       end
     end
 
-    xcontext 'with example 8' do
+    context 'with example 8' do
       let(:example) { Examples::Example8 }
 
       it 'converts to correct xml' do
