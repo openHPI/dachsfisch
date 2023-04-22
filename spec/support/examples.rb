@@ -123,6 +123,16 @@ module Examples
     end
   end
 
+  class CustomExampleCdataIntentionalWhitespace
+    def self.json
+      '{"alice":{"#1":"   "}}'
+    end
+
+    def self.xml
+      '<alice><![CDATA[   ]]></alice>'
+    end
+  end
+
   class CustomExampleFormattedXml
     def self.json
       '{"alice":{"bob":{"$1":"charlie"}}}'
