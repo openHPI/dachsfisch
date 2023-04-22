@@ -29,7 +29,7 @@ module Dachsfisch
         when 'Nokogiri::XML::Text'
           add_text_with_custom_key(hash, child, '$')
         when 'Nokogiri::XML::Comment'
-          add_text_with_custom_key(hash, child, '!')
+          add_text_with_custom_key(hash, child, '!', strip_text: false)
         when 'Nokogiri::XML::CDATA'
           add_text_with_custom_key(hash, child, '#', strip_text: false)
         else
@@ -38,10 +38,11 @@ module Dachsfisch
     end
 
     def add_text_with_custom_key(hash, child, base_key, strip_text: true)
-      if !strip_text || !child.text.strip.empty? || child.text.empty?
-        child_key = next_key_index hash, base_key
-        hash[child_key] = strip_text ? child.text.strip : child.text
-      end
+      value = strip_text ? child.text.strip : child.text
+      return if value.empty? && strip_text
+
+      child_key = next_key_index hash, base_key
+      hash[child_key] = value
     end
 
     def add_value_to_hash(hash, child, active_namespaces)

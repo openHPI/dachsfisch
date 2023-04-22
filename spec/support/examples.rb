@@ -93,6 +93,16 @@ module Examples
     end
   end
 
+  class CustomExampleCommentWhitespace
+    def self.json
+      '{"alice":{"!1":" my comment "}}'
+    end
+
+    def self.xml
+      '<alice><!-- my comment --></alice>'
+    end
+  end
+
   class CustomExampleCdata
     def self.json
       '{"alice":{"#1":"<bob></bob>"}}'
