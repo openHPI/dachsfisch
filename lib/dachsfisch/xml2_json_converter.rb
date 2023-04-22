@@ -31,16 +31,16 @@ module Dachsfisch
         when 'Nokogiri::XML::Comment'
           add_text_with_custom_key(hash, child, '!')
         when 'Nokogiri::XML::CDATA'
-          add_text_with_custom_key(hash, child, '#')
+          add_text_with_custom_key(hash, child, '#', strip_text: false)
         else
           add_value_to_hash(hash, child, active_namespaces)
       end
     end
 
-    def add_text_with_custom_key(hash, child, base_key)
-      if !child.text.strip.empty? || child.text.strip == child.text
+    def add_text_with_custom_key(hash, child, base_key, strip_text: true)
+      if !strip_text || !child.text.strip.empty? || child.text.empty?
         child_key = next_key_index hash, base_key
-        hash[child_key] = child.text.strip
+        hash[child_key] = strip_text ? child.text.strip : child.text
       end
     end
 
