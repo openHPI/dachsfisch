@@ -4,6 +4,8 @@ require 'simplecov'
 SimpleCov.start
 
 require 'dachsfisch'
+require 'rspec/matchers'
+require 'equivalent-xml'
 
 Dir['./spec/support/**/*.rb'].each {|f| require f }
 RSpec.configure do |config|

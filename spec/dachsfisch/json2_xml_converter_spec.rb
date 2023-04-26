@@ -11,7 +11,7 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
       let(:example) { Examples::Example2 }
 
       it 'converts to correct xml' do
-        expect(xml).to be_an_equal_xml_as(example.xml)
+        expect(xml).to be_equivalent_to(example.xml)
       end
       # xml.alice 'bob'
     end
@@ -20,31 +20,23 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
       let(:example) { Examples::Example3 }
 
       it 'converts to correct xml' do
-        expect(xml).to be_an_equal_xml_as(example.xml)
+        expect(xml).to be_equivalent_to(example.xml)
       end
-      # xml.alice {
-      #   xml.bob 'charlie'
-      #   xml.david 'edgar'
-      # }
     end
 
     context 'with example 4' do
       let(:example) { Examples::Example4 }
 
       it 'converts to correct xml' do
-        expect(xml).to be_an_equal_xml_as(example.xml)
+        expect(xml).to be_equivalent_to(example.xml)
       end
-      # xml.alice {
-      #   xml.bob 'charlie'
-      #   xml.bob 'david'
-      # }
     end
 
     context 'with example 5' do
       let(:example) { Examples::Example5 }
 
       it 'converts to correct xml' do
-        expect(xml).to be_an_equal_xml_as(example.xml)
+        expect(xml).to be_equivalent_to(example.xml)
       end
     end
 
@@ -52,7 +44,7 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
       let(:example) { Examples::Example7 }
 
       it 'converts to correct xml' do
-        expect(xml).to be_an_equal_xml_as(example.xml)
+        expect(xml).to be_equivalent_to(example.xml)
       end
     end
 
@@ -60,15 +52,15 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
       let(:example) { Examples::Example8 }
 
       it 'converts to correct xml' do
-        expect(xml).to be_an_equal_xml_as(example.xml)
+        expect(xml).to be_equivalent_to(example.xml)
       end
     end
 
-    xcontext 'with example 9' do
+    context 'with example 9' do
       let(:example) { Examples::Example9 }
 
       it 'converts to correct xml' do
-        expect(xml).to be_an_equal_xml_as(example.xml)
+        expect(xml).to be_equivalent_to(example.xml)
       end
     end
   end
