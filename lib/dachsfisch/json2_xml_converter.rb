@@ -29,32 +29,42 @@ module Dachsfisch
 
     def add_node(xml, key, element)
       case element
-      when Hash
-        node = create_node(element, key, xml)
-        element.keys.filter { |element_key| element_key.start_with?('@') }.each do |attribute_key|
-          if attribute_key.start_with? '@xmlns'
-
-            element[attribute_key].each do |namespace_key, namespace|
-              @namespaces["xmlns#{namespace_key == '$' ? '' : ":#{namespace_key}"}"] = namespace
-            end
-          else
-            node[attribute_key.delete_prefix('@')] = element[attribute_key]
+        when String
+          case key[0]
+            when '!'
+              xml.comment element
+            when '#'
+              xml.cdata element
+            when '$'
+              xml.text element
           end
+        when Hash
+          node = xml.send(key) { add_element(xml, element) }
+          element.keys.filter {|element_key| element_key.start_with?('@') }.each do |attribute_key|
+            if attribute_key.start_with? '@xmlns'
 
-        end
-      when Array
-        element.each do |sub_element|
-          add_node xml, key, sub_element
-        end
+              element[attribute_key].each do |namespace_key, namespace|
+                @namespaces["xmlns#{namespace_key == '$' ? '' : ":#{namespace_key}"}"] = namespace
+              end
+            else
+              node[attribute_key.delete_prefix('@')] = element[attribute_key]
+            end
+          end
+        when Array
+          element.each do |sub_element|
+            add_node xml, key, sub_element
+          end
       end
     end
 
-    def create_node(element, key, xml)
-      if element.keys.include?('$')
-        return xml.send(key, element['$'])
-      end
-
-      xml.send(key) { add_element(xml, element) }
-    end
+    # def create_node(element, key, xml)
+    #   # element.keys.filter{|k|!k.start_with?('@')}
+    #   # string_key = element.keys.detect {|element_key| element_key.start_with?('$') }
+    #   # unless string_key.nil?
+    #   #   return xml.send(key, element[string_key])
+    #   # end
+    #
+    #   xml.send(key) { add_element(xml, element) }
+    # end
   end
 end

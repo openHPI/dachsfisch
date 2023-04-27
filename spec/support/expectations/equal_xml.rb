@@ -11,9 +11,9 @@ RSpec::Matchers.define :be_an_equal_xml_as do |xml2|
 
     @doc1.to_s == @doc2.to_s
   end
-  failure_message do |actual|
+  failure_message do |_actual|
     # :nocov:
-    "#{@doc1.to_s} is not equal to \n#{@doc2.to_s}."
+    "#{@doc1} is not equal to \n#{@doc2}."
     # :nocov:
   end
 end
