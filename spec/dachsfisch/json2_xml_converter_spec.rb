@@ -2,7 +2,7 @@
 
 RSpec.describe Dachsfisch::JSON2XMLConverter do
   describe '#perform' do
-    subject(:xml) { converter.perform }
+    subject { converter.perform }
 
     let(:converter) { described_class.new json: }
 
