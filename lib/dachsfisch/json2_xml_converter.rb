@@ -4,15 +4,7 @@ module Dachsfisch
   class JSON2XMLConverter
     def initialize(json:)
       @json_hash = JSON.parse json
-    end
-
-    def add_element(xml, element)
-      return unless element.is_a? Hash
-
       @namespaces = {}
-      element.each do |key, value|
-        add_node(xml, key, value) unless key == '@xmlns'
-      end
     end
 
     def perform
@@ -27,29 +19,21 @@ module Dachsfisch
 
     private
 
+    def add_element(xml, element)
+      return unless element.is_a? Hash
+
+      element.each do |key, value|
+        add_node(xml, key, value) unless key == '@xmlns'
+      end
+    end
+
     def add_node(xml, key, element)
       case element
         when String
-          case key[0]
-            when '!'
-              xml.comment element
-            when '#'
-              xml.cdata element
-            when '$'
-              xml.text element
-          end
+          add_text_node(xml, element, key[0])
         when Hash
           node = xml.send(key) { add_element(xml, element) }
-          element.keys.filter {|element_key| element_key.start_with?('@') }.each do |attribute_key|
-            if attribute_key.start_with? '@xmlns'
-
-              element[attribute_key].each do |namespace_key, namespace|
-                @namespaces["xmlns#{namespace_key == '$' ? '' : ":#{namespace_key}"}"] = namespace
-              end
-            else
-              node[attribute_key.delete_prefix('@')] = element[attribute_key]
-            end
-          end
+          handle_attribute_and_namespaces(node, element)
         when Array
           element.each do |sub_element|
             add_node xml, key, sub_element
@@ -57,14 +41,28 @@ module Dachsfisch
       end
     end
 
-    # def create_node(element, key, xml)
-    #   # element.keys.filter{|k|!k.start_with?('@')}
-    #   # string_key = element.keys.detect {|element_key| element_key.start_with?('$') }
-    #   # unless string_key.nil?
-    #   #   return xml.send(key, element[string_key])
-    #   # end
-    #
-    #   xml.send(key) { add_element(xml, element) }
-    # end
+    def handle_attribute_and_namespaces(node, element)
+      element.keys.filter {|element_key| element_key.start_with?('@') }.each do |attribute_key|
+        if attribute_key.start_with? '@xmlns'
+
+          element[attribute_key].each do |namespace_key, namespace|
+            @namespaces["xmlns#{namespace_key == '$' ? '' : ":#{namespace_key}"}"] = namespace
+          end
+        else
+          node[attribute_key.delete_prefix('@')] = element[attribute_key]
+        end
+      end
+    end
+
+    def add_text_node(xml, element, type)
+      case type
+        when '!'
+          xml.comment element
+        when '#'
+          xml.cdata element
+        when '$'
+          xml.text element
+      end
+    end
   end
 end
