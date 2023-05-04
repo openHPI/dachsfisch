@@ -29,8 +29,6 @@ module Dachsfisch
 
     def add_node(xml, key, element)
       case element
-        when String
-          add_text_node(xml, element, key[0])
         when Hash
           node = xml.send(key) { add_element(xml, element) }
           handle_attribute_and_namespaces(node, element)
@@ -38,6 +36,8 @@ module Dachsfisch
           element.each do |sub_element|
             add_node xml, key, sub_element
           end
+        else
+          add_text_node(xml, element, key[0])
       end
     end
 
