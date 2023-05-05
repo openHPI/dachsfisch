@@ -11,12 +11,12 @@ module Dachsfisch
       {root.name => extract_node(root)}.to_json
     end
 
-    def extract_node(node, active_namespaces = {})
+    def extract_node(node)
       hash = {}
-      add_namespaces_to_active_namespaces(active_namespaces, node)
+      active_namespaces = add_namespaces_to_active_namespaces(node)
       hash['@xmlns'] = active_namespaces unless active_namespaces.empty?
       node.children.each do |child|
-        handle_content(hash, child, active_namespaces)
+        handle_content(hash, child)
         handle_attributes(hash, node)
       end
       hash
@@ -24,7 +24,7 @@ module Dachsfisch
 
     private
 
-    def handle_content(hash, child, active_namespaces)
+    def handle_content(hash, child)
       case child.class.to_s # use string representation because CData inherits Text
         when 'Nokogiri::XML::Text'
           add_text_with_custom_key(hash, child, '$')
@@ -33,7 +33,7 @@ module Dachsfisch
         when 'Nokogiri::XML::CDATA'
           add_text_with_custom_key(hash, child, '#', strip_text: false)
         else
-          add_value_to_hash(hash, child, active_namespaces)
+          add_value_to_hash(hash, child)
       end
     end
 
@@ -45,10 +45,10 @@ module Dachsfisch
       hash[child_key] = value
     end
 
-    def add_value_to_hash(hash, child, active_namespaces)
+    def add_value_to_hash(hash, child)
       child_key = child.namespace&.prefix.nil? ? child.name : "#{child.namespace.prefix}:#{child.name}"
       existing_value = hash[child_key]
-      new_value = extract_node(child, active_namespaces)
+      new_value = extract_node(child)
 
       if existing_value.nil?
         hash[child_key] = new_value
@@ -65,11 +65,8 @@ module Dachsfisch
       end
     end
 
-    def add_namespaces_to_active_namespaces(active_namespaces, node)
-      node.namespaces.each do |key, url|
-        ns_key = convert_namespace_key key
-        active_namespaces[ns_key] = url unless active_namespaces.key?(ns_key)
-      end
+    def add_namespaces_to_active_namespaces(node)
+      node.namespaces.transform_keys {|k| convert_namespace_key(k) }
     end
 
     def convert_namespace_key(key)

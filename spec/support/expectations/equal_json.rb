@@ -2,17 +2,27 @@
 
 require 'rspec/expectations'
 
-RSpec::Matchers.define :be_an_equal_json_as do |json2|
-  match do |json1|
-    return false unless json1.is_a?(String) && json2.is_a?(String)
+RSpec::Matchers.define :be_an_equal_json_as do |expected|
+  attr_reader :actual, :expected
+
+  match do |actual|
+    return false unless actual.is_a?(String) && expected.is_a?(String)
 
     begin
-      return JSON.parse(json1) == JSON.parse(json2)
+      expected_json = JSON.parse(expected)
+      @expected = JSON.pretty_generate(expected_json)
+      actual_json = JSON.parse(actual)
+      @actual = JSON.pretty_generate(actual_json)
+
+      return actual_json == expected_json
     rescue JSON::ParserError
       return false
     end
   end
+
   failure_message do |actual|
-    "#{actual} is not equal to \n#{json2}."
+    "#{@actual || actual} is not equal to \n#{@expected || expected}."
   end
+
+  diffable
 end

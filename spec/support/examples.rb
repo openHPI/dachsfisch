@@ -18,7 +18,12 @@ module Examples
     end
 
     def self.xml
-      '<alice><bob>charlie</bob><david>edgar</david></alice>'
+      <<-XML
+      <alice>
+        <bob>charlie</bob>
+        <david>edgar</david>
+      </alice>
+      XML
     end
   end
 
@@ -28,7 +33,12 @@ module Examples
     end
 
     def self.xml
-      '<alice><bob>charlie</bob><bob>david</bob></alice>'
+      <<-XML
+      <alice>
+        <bob>charlie</bob>
+        <bob>david</bob>
+      </alice>
+      XML
     end
   end
 
@@ -69,7 +79,12 @@ module Examples
     end
 
     def self.xml
-      '<alice xmlns="http://some-namespace" xmlns:charlie="http://some-other-namespace"> <bob>david</bob> <charlie:edgar>frank</charlie:edgar> </alice>'
+      <<-XML
+      <alice xmlns="http://some-namespace" xmlns:charlie="http://some-other-namespace">
+        <bob>david</bob>
+        <charlie:edgar>frank</charlie:edgar>#{' '}
+      </alice>
+      XML
     end
   end
   # rubocop:enable Layout/LineLength
@@ -90,7 +105,11 @@ module Examples
     end
 
     def self.xml
-      '<alice><!--my comment--></alice>'
+      <<-XML
+      <alice>
+        <!--my comment-->
+      </alice>
+      XML
     end
   end
 
@@ -100,7 +119,27 @@ module Examples
     end
 
     def self.xml
-      '<alice><!-- my comment --></alice>'
+      <<-XML
+      <alice>
+        <!-- my comment -->
+      </alice>
+      XML
+    end
+  end
+
+  class CustomExampleLargerArray
+    def self.json
+      '{ "alice": { "bob" : [{"$1": "charlie" }, {"$1": "david" }, {"$1": "edgar" }] } }'
+    end
+
+    def self.xml
+      <<-XML
+      <alice>
+        <bob>charlie</bob>
+        <bob>david</bob>
+        <bob>edgar</bob>
+      </alice>
+      XML
     end
   end
 
@@ -111,16 +150,6 @@ module Examples
 
     def self.xml
       '<alice><![CDATA[<bob></bob>]]></alice>'
-    end
-  end
-
-  class CustomExampleLargerArray
-    def self.json
-      '{ "alice": { "bob" : [{"$1": "charlie" }, {"$1": "david" }, {"$1": "edgar" }] } }'
-    end
-
-    def self.xml
-      '<alice><bob>charlie</bob><bob>david</bob><bob>edgar</bob></alice>'
     end
   end
 
@@ -159,6 +188,32 @@ module Examples
       XML
     end
   end
+
+  # class CustomExampleNumber
+  #   def self.json
+  #     '{ "alice": { "$1": 1 }}'
+  #   end
+  #
+  #   def self.xml
+  #     '<alice>1</alice>'
+  #   end
+  # end
+
+  # rubocop:disable Layout/LineLength
+  class CustomExampleNestedXMLNS
+    def self.json
+      '{ "alice": { "@xmlns": { "$": "http://some-namespace" }, "bob": { "@xmlns": { "$": "http://some-other-namespace" }, "$1": "charlie" } } }'
+    end
+
+    def self.xml
+      <<~XML
+        <alice xmlns="http://some-namespace">
+          <bob xmlns="http://some-other-namespace">charlie</bob>
+        </alice>
+      XML
+    end
+  end
+  # rubocop:enable Layout/LineLength
 
   def self.all
     constants.filter_map do |constant|
