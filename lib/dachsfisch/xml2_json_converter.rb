@@ -4,6 +4,8 @@ module Dachsfisch
   class XML2JSONConverter
     def initialize(xml:)
       @doc = Nokogiri::XML(xml)
+      raise InvalidXMLInputError.new('input empty') if xml.nil? || xml.empty?
+      raise InvalidXMLInputError.new(@doc.errors) if @doc.errors.length.positive?
     end
 
     def perform

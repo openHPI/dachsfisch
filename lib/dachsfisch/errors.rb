@@ -3,4 +3,5 @@
 module Dachsfisch
   class DachsfischError < StandardError; end
   class InvalidJSONInputError < DachsfischError; end
+  class InvalidXMLInputError < DachsfischError; end
 end
