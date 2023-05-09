@@ -4,6 +4,11 @@ module Dachsfisch
   class JSON2XMLConverter
     def initialize(json:)
       @json_hash = JSON.parse json
+      if @json_hash.length > 1
+        raise InvalidJSONInputError.new('multiple root nodes are not supported')
+      end
+    rescue TypeError, JSON::ParserError => e
+      raise InvalidJSONInputError.new(e.message)
     end
 
     def perform

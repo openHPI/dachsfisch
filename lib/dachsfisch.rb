@@ -3,10 +3,10 @@
 require 'nokogiri'
 require 'json'
 
-require_relative 'dachsfisch/version'
-require_relative 'dachsfisch/xml2_json_converter'
-require_relative 'dachsfisch/json2_xml_converter'
+require 'dachsfisch/version'
+require 'dachsfisch/xml2_json_converter'
+require 'dachsfisch/json2_xml_converter'
+require 'dachsfisch/errors'
 
 module Dachsfisch
-  class Error < StandardError; end
 end
