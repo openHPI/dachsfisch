@@ -1,6 +1,40 @@
 # frozen_string_literal: true
 
 RSpec.describe Dachsfisch::XML2JSONConverter do
+  describe '.new' do
+    subject(:converter) { described_class.new(xml:) }
+
+    let(:xml) { '<a></a>' }
+
+    it 'assigns parsed xml' do
+      expect(converter.instance_variable_get(:@doc)).to be { Nokogiri::XML(xml) }
+    end
+
+    context 'with invalid xml' do
+      let(:xml) { '<a>' }
+
+      it 'throws an Error' do
+        expect { converter }.to raise_error(Dachsfisch::InvalidXMLInputError)
+      end
+    end
+
+    context 'with nil' do
+      let(:xml) { nil }
+
+      it 'throws an Error' do
+        expect { converter }.to raise_error(Dachsfisch::InvalidXMLInputError, 'input empty')
+      end
+    end
+
+    context 'with empty string' do
+      let(:xml) { '' }
+
+      it 'throws an Error' do
+        expect { converter }.to raise_error(Dachsfisch::InvalidXMLInputError, 'input empty')
+      end
+    end
+  end
+
   describe '#perform' do
     subject { converter.perform }
 
