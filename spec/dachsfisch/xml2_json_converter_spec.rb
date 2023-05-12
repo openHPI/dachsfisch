@@ -6,7 +6,7 @@ RSpec.describe Dachsfisch::XML2JSONConverter do
 
     let(:converter) { described_class.new xml: }
 
-    Examples.each do |example|
+    Examples.each :xml2json do |example|
       context "with #{example.name}" do
         let(:xml) { example.xml }
 
