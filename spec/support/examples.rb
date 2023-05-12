@@ -2,180 +2,343 @@
 
 # Examples from http://www.sklar.com/badgerfish/
 module Examples
-  class Example2
-    def self.json
-      '{ "alice": { "$1" : "bob" } }'
-    end
-
-    def self.xml
-      '<alice>bob</alice>'
+  class ExampleBase
+    def self.test_directions
+      %i[xml2json json2xml]
     end
   end
 
-  class Example3
+  class Example2 < ExampleBase
     def self.json
-      '{ "alice": { "bob" : { "$1": "charlie" }, "david": { "$1": "edgar"} } }'
-    end
-
-    def self.xml
-      <<-XML
-      <alice>
-        <bob>charlie</bob>
-        <david>edgar</david>
-      </alice>
-      XML
-    end
-  end
-
-  class Example4
-    def self.json
-      '{ "alice": { "bob" : [{"$1": "charlie" }, {"$1": "david" }] } }'
+      <<~JSON
+        {
+          "alice": {
+            "$1": "bob"
+          }
+        }
+      JSON
     end
 
     def self.xml
       <<-XML
-      <alice>
-        <bob>charlie</bob>
-        <bob>david</bob>
-      </alice>
+        <alice>bob</alice>
       XML
     end
   end
 
-  class Example5
+  class Example3 < ExampleBase
     def self.json
-      '{ "alice": { "$1" : "bob", "@charlie" : "david" } }'
-    end
-
-    def self.xml
-      '<alice charlie="david">bob</alice>'
-    end
-  end
-
-  class Example7
-    def self.json
-      '{ "alice": { "$1" : "bob", "@xmlns": { "$" : "http://some-namespace"} } }'
-    end
-
-    def self.xml
-      '<alice xmlns="http://some-namespace">bob</alice>'
-    end
-  end
-
-  # rubocop:disable Layout/LineLength
-  class Example8
-    def self.json
-      '{ "alice": { "$1" : "bob", "@xmlns": { "$" : "http://some-namespace", "charlie" : "http://some-other-namespace" } } }'
-    end
-
-    def self.xml
-      '<alice xmlns="http://some-namespace" xmlns:charlie="http://some-other-namespace">bob</alice>'
-    end
-  end
-
-  class Example9
-    def self.json
-      '{ "alice" : { "bob" : { "$1" : "david" , "@xmlns" : {"charlie" : "http://some-other-namespace" , "$" : "http://some-namespace"} } , "charlie:edgar" : { "$1" : "frank" , "@xmlns" : {"charlie":"http://some-other-namespace", "$" : "http://some-namespace"} }, "@xmlns" : { "charlie" : "http://some-other-namespace", "$" : "http://some-namespace"} } }'
+      <<~JSON
+        {
+          "alice": {
+            "bob": {
+              "$1": "charlie"
+            },
+            "david": {
+              "$1": "edgar"
+            }
+          }
+        }
+      JSON
     end
 
     def self.xml
       <<-XML
-      <alice xmlns="http://some-namespace" xmlns:charlie="http://some-other-namespace">
-        <bob>david</bob>
-        <charlie:edgar>frank</charlie:edgar>#{' '}
-      </alice>
+        <alice>
+          <bob>charlie</bob>
+          <david>edgar</david>
+        </alice>
       XML
     end
   end
-  # rubocop:enable Layout/LineLength
 
-  class CustomExampleMultipleTextNodes
+  class Example4 < ExampleBase
     def self.json
-      '{"alice":{"$1":"bob","charlie":{"$1":"bob2"},"$2":"bob3"}}'
-    end
-
-    def self.xml
-      '<alice>bob<charlie>bob2</charlie>bob3</alice>'
-    end
-  end
-
-  class CustomExampleComment
-    def self.json
-      '{"alice":{"!1":"my comment"}}'
+      <<~JSON
+        {
+          "alice": {
+            "bob": [
+              {
+                "$1": "charlie"
+              },
+              {
+                "$1": "david"
+              }
+            ]
+          }
+        }
+      JSON
     end
 
     def self.xml
       <<-XML
-      <alice>
-        <!--my comment-->
-      </alice>
+        <alice>
+          <bob>charlie</bob>
+          <bob>david</bob>
+        </alice>
       XML
     end
   end
 
-  class CustomExampleCommentWhitespace
+  class Example5 < ExampleBase
     def self.json
-      '{"alice":{"!1":" my comment "}}'
+      <<~JSON
+        {
+          "alice": {
+            "$1": "bob",
+            "@charlie": "david"
+          }
+        }
+      JSON
     end
 
     def self.xml
       <<-XML
-      <alice>
-        <!-- my comment -->
-      </alice>
+        <alice charlie="david">bob</alice>
       XML
     end
   end
 
-  class CustomExampleLargerArray
+  class Example7 < ExampleBase
     def self.json
-      '{ "alice": { "bob" : [{"$1": "charlie" }, {"$1": "david" }, {"$1": "edgar" }] } }'
+      <<~JSON
+        {
+          "alice": {
+            "$1": "bob",
+            "@xmlns": {
+              "$": "http://some-namespace"
+            }
+          }
+        }
+      JSON
     end
 
     def self.xml
       <<-XML
-      <alice>
-        <bob>charlie</bob>
-        <bob>david</bob>
-        <bob>edgar</bob>
-      </alice>
+        <alice xmlns="http://some-namespace">bob</alice>
       XML
     end
   end
 
-  class CustomExampleCdata
+  class Example8 < ExampleBase
     def self.json
-      '{"alice":{"#1":"<bob></bob>"}}'
+      <<~JSON
+        {
+          "alice": {
+            "$1": "bob",
+            "@xmlns": {
+              "$": "http://some-namespace",
+              "charlie": "http://some-other-namespace"
+            }
+          }
+        }
+      JSON
     end
 
     def self.xml
-      '<alice><![CDATA[<bob></bob>]]></alice>'
+      <<-XML
+        <alice xmlns="http://some-namespace" xmlns:charlie="http://some-other-namespace">bob</alice>
+      XML
     end
   end
 
-  class CustomExampleCdataEmpty
+  class Example9 < ExampleBase
     def self.json
-      '{"alice":{"#1":""}}'
+      <<~JSON
+        {
+          "alice": {
+            "bob": {
+              "$1": "david",
+              "@xmlns": {
+                "charlie": "http://some-other-namespace",
+                "$": "http://some-namespace"
+              }
+            },
+            "charlie:edgar": {
+              "$1": "frank",
+              "@xmlns": {
+                "charlie": "http://some-other-namespace",
+                "$": "http://some-namespace"
+              }
+            },
+            "@xmlns": {
+              "charlie": "http://some-other-namespace",
+              "$": "http://some-namespace"
+            }
+          }
+        }
+      JSON
     end
 
     def self.xml
-      '<alice><![CDATA[]]></alice>'
+      <<-XML
+        <alice xmlns="http://some-namespace" xmlns:charlie="http://some-other-namespace">
+          <bob>david</bob>
+          <charlie:edgar>frank</charlie:edgar>
+        </alice>
+      XML
     end
   end
 
-  class CustomExampleCdataIntentionalWhitespace
+  class CustomExampleMultipleTextNodes < ExampleBase
     def self.json
-      '{"alice":{"#1":"   "}}'
+      <<~JSON
+        {
+          "alice": {
+            "$1": "bob",
+            "charlie": {
+              "$1": "bob2"
+            },
+            "$2": "bob3"
+          }
+        }
+      JSON
     end
 
     def self.xml
-      '<alice><![CDATA[   ]]></alice>'
+      <<-XML
+        <alice>bob<charlie>bob2</charlie>bob3</alice>
+      XML
     end
   end
 
-  class CustomExampleFormattedXml
+  class CustomExampleComment < ExampleBase
     def self.json
-      '{"alice":{"bob":{"$1":"charlie"}}}'
+      <<~JSON
+        {
+          "alice": {
+            "!1": "my comment"
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice>
+          <!--my comment-->
+        </alice>
+      XML
+    end
+  end
+
+  class CustomExampleCommentWhitespace < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "alice": {
+            "!1": " my comment "
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice>
+          <!-- my comment -->
+        </alice>
+      XML
+    end
+  end
+
+  class CustomExampleLargerArray < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "alice": {
+            "bob": [
+              {
+                "$1": "charlie"
+              },
+              {
+                "$1": "david"
+              },
+              {
+                "$1": "edgar"
+              }
+            ]
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice>
+          <bob>charlie</bob>
+          <bob>david</bob>
+          <bob>edgar</bob>
+        </alice>
+      XML
+    end
+  end
+
+  class CustomExampleCdata < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "alice": {
+            "#1": "<bob></bob>"
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice><![CDATA[<bob></bob>]]></alice>
+      XML
+    end
+  end
+
+  class CustomExampleCdataEmpty < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "alice": {
+            "#1": ""
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice><![CDATA[]]></alice>
+      XML
+    end
+  end
+
+  class CustomExampleCdataIntentionalWhitespace < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "alice": {
+            "#1": "   "
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice><![CDATA[   ]]></alice>
+      XML
+    end
+  end
+
+  class CustomExampleFormattedXml < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "alice": {
+            "bob": {
+              "$1": "charlie"
+            }
+          }
+        }
+      JSON
     end
 
     def self.xml
@@ -189,20 +352,45 @@ module Examples
     end
   end
 
-  # class CustomExampleNumber
-  #   def self.json
-  #     '{ "alice": { "$1": 1 }}'
-  #   end
-  #
-  #   def self.xml
-  #     '<alice>1</alice>'
-  #   end
-  # end
+  class CustomExampleNumber < ExampleBase
+    def self.test_directions
+      [:json2xml]
+    end
 
-  # rubocop:disable Layout/LineLength
-  class CustomExampleNestedXMLNS
     def self.json
-      '{ "alice": { "@xmlns": { "$": "http://some-namespace" }, "bob": { "@xmlns": { "$": "http://some-other-namespace" }, "$1": "charlie" } } }'
+      <<~JSON
+        {
+          "alice": {
+            "$1": 1
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice>1</alice>
+      XML
+    end
+  end
+
+  class CustomExampleNestedXMLNS < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "alice": {
+            "@xmlns": {
+              "$": "http://some-namespace"
+            },
+            "bob": {
+              "@xmlns": {
+                "$": "http://some-other-namespace"
+              },
+              "$1": "charlie"
+            }
+          }
+        }
+      JSON
     end
 
     def self.xml
@@ -213,16 +401,15 @@ module Examples
       XML
     end
   end
-  # rubocop:enable Layout/LineLength
 
   def self.all
     constants.filter_map do |constant|
       c = const_get(constant)
-      c if c.is_a?(Class)
+      c if c.is_a?(Class) && c != ExampleBase
     end
   end
 
-  def self.each(&)
-    all.each(&)
+  def self.each(direction, &)
+    all.filter {|c| c.test_directions.include? direction }.each(&)
   end
 end
