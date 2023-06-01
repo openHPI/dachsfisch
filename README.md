@@ -1,7 +1,7 @@
 # Dachsfisch
 
 [![Build Status](https://github.com/openHPI/dachsfisch/workflows/CI/badge.svg)](https://github.com/openHPI/dachsfisch/actions?query=workflow%3ACI)
-[![codecov](https://codecov.io/gh/openHPI/dachsfisch/branch/master/graph/badge.svg?token=K267SFJO7S)](https://codecov.io/gh/openHPI/dachsfisch)
+[![codecov](https://codecov.io/gh/openHPI/dachsfisch/branch/main/graph/badge.svg?token=K267SFJO7S)](https://codecov.io/gh/openHPI/dachsfisch)
 
 This gem offers a Ruby implementation of the [BadgerFish standard](http://www.sklar.com/badgerfish/), a set of rules for converting documents between the XML and JSON format. This gem supports conversion in both directions, specifically XML-to-JSON and JSON-to-XML.
 
@@ -65,7 +65,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/openHPI/dachsfisch. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/openHPI/dachsfisch/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/openHPI/dachsfisch. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/openHPI/dachsfisch/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -73,4 +73,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in this project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/openHPI/dachsfisch/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in this project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/openHPI/dachsfisch/blob/main/CODE_OF_CONDUCT.md).
