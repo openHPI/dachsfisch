@@ -47,14 +47,14 @@ Based on the desired conversion, use one of the following classes. In both cases
 
 ```ruby
 xml = '<alice>bob</alice>'
-json = Dachsfisch::XML2JSONConverter.new(xml: xml)
+json = Dachsfisch::XML2JSONConverter.perform(xml: xml)
 ```
 
 ### JSON-to-XML
 
 ```ruby
 json = '{ "alice": { "$" : "bob" } }'
-xml = Dachsfisch::JSON2XMLConverter.new(json: json)
+xml = Dachsfisch::JSON2XMLConverter.perform(json: json)
 ```
 
 ## Development

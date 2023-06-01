@@ -36,9 +36,7 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
   end
 
   describe '#perform' do
-    subject { converter.perform }
-
-    let(:converter) { described_class.new json: }
+    subject { described_class.perform json: }
 
     Examples.each :json2xml do |example|
       context "with #{example.name}" do

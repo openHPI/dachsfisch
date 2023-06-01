@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
 module Dachsfisch
-  class XML2JSONConverter
+  class XML2JSONConverter < ConverterBase
     def initialize(xml:)
+      super()
       @doc = Nokogiri::XML(xml)
       raise InvalidXMLInputError.new('input empty') if xml.nil? || xml.empty?
       raise InvalidXMLInputError.new(@doc.errors) if @doc.errors.length.positive?
     end
 
-    def perform
+    def execute
       root = @doc.root
       {root.name => extract_node(root)}.to_json
     end
+
+    private
 
     def extract_node(node)
       hash = {}
@@ -23,8 +26,6 @@ module Dachsfisch
       end
       hash
     end
-
-    private
 
     def handle_content(hash, child)
       case child.class.to_s # use string representation because CData inherits Text

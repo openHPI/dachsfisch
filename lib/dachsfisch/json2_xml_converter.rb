@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module Dachsfisch
-  class JSON2XMLConverter
+  class JSON2XMLConverter < ConverterBase
     def initialize(json:)
+      super()
       @json_hash = JSON.parse json
       if @json_hash.length > 1
         raise InvalidJSONInputError.new('multiple root nodes are not supported')
@@ -11,7 +12,7 @@ module Dachsfisch
       raise InvalidJSONInputError.new(e.message)
     end
 
-    def perform
+    def execute
       Nokogiri::XML::Builder.new do |xml|
         add_element xml, @json_hash
       end.to_xml
