@@ -402,6 +402,27 @@ module Examples
     end
   end
 
+  class CustomExampleNamespaceOnRoot < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "bob:alice": {
+            "@xmlns": {
+              "bob": "http://some-other-namespace"
+            },
+            "$1": "charlie"
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <bob:alice xmlns:bob="http://some-other-namespace">charlie</bob:alice>
+      XML
+    end
+  end
+
   def self.all
     constants.filter_map do |constant|
       c = const_get(constant)

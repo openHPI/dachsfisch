@@ -11,7 +11,7 @@ module Dachsfisch
 
     def execute
       root = @doc.root
-      {root.name => extract_node(root)}.to_json
+      {node_name(root) => extract_node(root)}.to_json
     end
 
     private
@@ -49,7 +49,7 @@ module Dachsfisch
     end
 
     def add_value_to_hash(hash, child)
-      child_key = child.namespace&.prefix.nil? ? child.name : "#{child.namespace.prefix}:#{child.name}"
+      child_key = node_name(child)
       existing_value = hash[child_key]
       new_value = extract_node(child)
 
@@ -60,6 +60,10 @@ module Dachsfisch
       else
         hash[child_key] = [existing_value, new_value]
       end
+    end
+
+    def node_name(node)
+      node.namespace&.prefix.nil? ? node.name : "#{node.namespace.prefix}:#{node.name}"
     end
 
     def handle_attributes(hash, node)
