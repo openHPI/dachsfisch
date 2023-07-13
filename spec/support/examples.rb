@@ -274,6 +274,28 @@ module Examples
     end
   end
 
+  class CustomExampleEmptyNodeWithAttribute < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "alice": {
+            "bob": {
+              "@foo": "bar"
+            }
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice>
+          <bob foo="bar"/>
+        </alice>
+      XML
+    end
+  end
+
   class CustomExampleCdata < ExampleBase
     def self.json
       <<~JSON
