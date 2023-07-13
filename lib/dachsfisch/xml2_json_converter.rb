@@ -20,9 +20,10 @@ module Dachsfisch
       hash = {}
       active_namespaces = add_namespaces_to_active_namespaces(node)
       hash['@xmlns'] = active_namespaces unless active_namespaces.empty?
+
+      handle_attributes(hash, node)
       node.children.each do |child|
         handle_content(hash, child)
-        handle_attributes(hash, node)
       end
       hash
     end
