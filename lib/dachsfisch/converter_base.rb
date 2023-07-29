@@ -2,8 +2,8 @@
 
 module Dachsfisch
   class ConverterBase
-    def self.perform(**args)
-      new(**args).execute
+    def self.perform(**)
+      new(**).execute
     end
   end
 end
