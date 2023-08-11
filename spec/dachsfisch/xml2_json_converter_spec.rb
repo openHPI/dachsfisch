@@ -7,7 +7,7 @@ RSpec.describe Dachsfisch::XML2JSONConverter do
     let(:xml) { '<a></a>' }
 
     it 'assigns parsed xml' do
-      expect(converter.instance_variable_get(:@doc)).to be { Nokogiri::XML(xml) }
+      expect(converter.instance_variable_get(:@fragment)).to be { Nokogiri::XML(xml) }
     end
 
     context 'with invalid xml' do

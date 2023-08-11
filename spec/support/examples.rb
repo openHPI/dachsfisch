@@ -445,6 +445,57 @@ module Examples
     end
   end
 
+  class CustomExampleMultipleRootNodes < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "alice": {
+            "$1": "bob"
+          },
+          "charlie": {
+            "$1": "david"
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice>bob</alice>
+        <charlie>david</charlie>
+      XML
+    end
+  end
+
+  class CustomExampleNamespaceOnRootWithMultipleRootNodes < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "bob:alice": {
+            "@xmlns": {
+              "bob": "http://some-namespace"
+            },
+            "$1": "charlie"
+          },
+          "david:edgar": {
+            "@xmlns": {
+              "david": "http://some-other-namespace"
+            },
+            "$1": "foobar"
+          }
+
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <bob:alice xmlns:bob="http://some-namespace">charlie</bob:alice>
+        <david:edgar xmlns:david="http://some-other-namespace">foobar</david:edgar>
+      XML
+    end
+  end
+
   def self.all
     constants.filter_map do |constant|
       c = const_get(constant)
