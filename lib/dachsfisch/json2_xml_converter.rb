@@ -5,17 +5,17 @@ module Dachsfisch
     def initialize(json:)
       super()
       @json_hash = JSON.parse json
-      if @json_hash.length > 1
-        raise InvalidJSONInputError.new('multiple root nodes are not supported')
-      end
     rescue TypeError, JSON::ParserError => e
       raise InvalidJSONInputError.new(e.message)
     end
 
     def execute
-      Nokogiri::XML::Builder.new do |xml|
+      fragment = Nokogiri::XML::DocumentFragment.parse ''
+
+      Nokogiri::XML::Builder.with fragment do |xml|
         add_element xml, @json_hash
-      end.to_xml
+      end
+      fragment.to_xml
     end
 
     private

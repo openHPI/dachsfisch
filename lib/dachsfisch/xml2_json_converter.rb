@@ -4,14 +4,17 @@ module Dachsfisch
   class XML2JSONConverter < ConverterBase
     def initialize(xml:)
       super()
-      @doc = Nokogiri::XML(xml)
+      @fragment = Nokogiri::XML::DocumentFragment.parse(xml)
       raise InvalidXMLInputError.new('input empty') if xml.nil? || xml.empty?
-      raise InvalidXMLInputError.new(@doc.errors) if @doc.errors.length.positive?
+      raise InvalidXMLInputError.new(@fragment.errors) if @fragment.errors.length.positive?
     end
 
     def execute
-      root = @doc.root
-      {node_name(root) => extract_node(root)}.to_json
+      result = {}
+      @fragment.elements.deconstruct.each do |root|
+        result[node_name(root)] = extract_node(root)
+      end
+      result.to_json
     end
 
     private

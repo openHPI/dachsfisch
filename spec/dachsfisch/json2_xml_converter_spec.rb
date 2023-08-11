@@ -25,14 +25,6 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
         expect { converter }.to raise_error(Dachsfisch::InvalidJSONInputError, 'no implicit conversion of nil into String')
       end
     end
-
-    context 'with a json that would result in multiple root nodes' do
-      let(:json) { '{"foo": "bar", "foobar": "barfoo"}' }
-
-      it 'throws an Error' do
-        expect { converter }.to raise_error(Dachsfisch::InvalidJSONInputError, 'multiple root nodes are not supported')
-      end
-    end
   end
 
   describe '#perform' do
