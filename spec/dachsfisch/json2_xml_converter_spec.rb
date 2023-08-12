@@ -37,5 +37,12 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
         it { is_expected.to be_equivalent_to(example.xml) }
       end
     end
+
+    context 'with a fragment with multiple root nodes' do
+      let(:example) { Examples::CustomExampleMultipleRootNodes }
+      let(:json) { example.json }
+
+      it { is_expected.to eql "<alice>bob</alice>\n<charlie>david</charlie>" }
+    end
   end
 end
