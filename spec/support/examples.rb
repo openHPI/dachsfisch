@@ -483,7 +483,6 @@ module Examples
             },
             "$1": "foobar"
           }
-
         }
       JSON
     end

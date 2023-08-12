@@ -15,7 +15,7 @@ module Dachsfisch
       Nokogiri::XML::Builder.with fragment do |xml|
         add_element xml, @json_hash
       end
-      fragment.to_xml
+      fragment.elements.deconstruct.map(&:to_xml).join("\n")
     end
 
     private
