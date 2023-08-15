@@ -10,7 +10,7 @@ module Dachsfisch
     end
 
     def execute
-      fragment = Nokogiri::XML::DocumentFragment.parse ''
+      fragment = Nokogiri::XML::DocumentFragment.new(Nokogiri::XML::Document.new)
 
       Nokogiri::XML::Builder.with fragment do |xml|
         add_element xml, @json_hash
