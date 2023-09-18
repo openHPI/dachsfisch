@@ -31,7 +31,8 @@ module Dachsfisch
     def add_node(xml, key, element)
       case element
         when Hash
-          node = xml.send(key) { add_element(xml, element) }
+          # underscore is used to disambiguate tag names from ruby methods
+          node = xml.send("#{key}_") { add_element(xml, element) }
           handle_attribute_and_namespaces(node, element)
         when Array
           element.each do |sub_element|
