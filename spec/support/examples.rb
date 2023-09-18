@@ -26,6 +26,24 @@ module Examples
     end
   end
 
+  class CustomExampleWithReservedWord < ExampleBase
+    def self.json
+      <<~JSON
+        {
+          "test": {
+            "$1": "test"
+          }
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <test>test</test>
+      XML
+    end
+  end
+
   class Example3 < ExampleBase
     def self.json
       <<~JSON
