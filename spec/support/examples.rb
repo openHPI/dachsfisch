@@ -160,28 +160,20 @@ module Examples
     end
   end
 
-  class Example9 < ExampleBase
+  class Example9Modified < ExampleBase
     def self.json
       <<~JSON
         {
           "alice": {
-            "bob": {
-              "$1": "david",
-              "@xmlns": {
-                "charlie": "http://some-other-namespace",
-                "$": "http://some-namespace"
-              }
-            },
-            "charlie:edgar": {
-              "$1": "frank",
-              "@xmlns": {
-                "charlie": "http://some-other-namespace",
-                "$": "http://some-namespace"
-              }
-            },
             "@xmlns": {
               "charlie": "http://some-other-namespace",
               "$": "http://some-namespace"
+            },
+            "bob": {
+              "$1": "david"
+            },
+            "charlie:edgar": {
+              "$1": "frank"
             }
           }
         }
