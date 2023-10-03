@@ -77,7 +77,7 @@ module Dachsfisch
     end
 
     def add_namespaces_to_active_namespaces(node)
-      node.namespaces.transform_keys {|k| convert_namespace_key(k) }
+      node.namespaces.reject {|k, v| node.parent.namespaces[k] == v }.transform_keys {|k| convert_namespace_key(k) }
     end
 
     def convert_namespace_key(key)
