@@ -14,20 +14,27 @@ module Dachsfisch
       @fragment.elements.deconstruct.each do |root|
         result[node_name(root)] = extract_node(root)
       end
+      add_order_to_hash result
       result.to_json
     end
 
     private
 
+    def add_order_to_hash(hash)
+      return if hash.keys.reject {|key| key.start_with?('@') }.empty?
+
+      hash['@@order'] = hash.keys.reject {|key| key.start_with?('@') }
+    end
+
     def extract_node(node)
       hash = {}
       active_namespaces = add_namespaces_to_active_namespaces(node)
       hash['@xmlns'] = active_namespaces unless active_namespaces.empty?
-
       handle_attributes(hash, node)
       node.children.each do |child|
         handle_content(hash, child)
       end
+      add_order_to_hash hash
       hash
     end
 

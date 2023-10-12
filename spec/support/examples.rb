@@ -13,8 +13,10 @@ module Examples
       <<~JSON
         {
           "alice": {
-            "$1": "bob"
-          }
+            "$1": "bob",
+            "@@order": ["$1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -31,8 +33,10 @@ module Examples
       <<~JSON
         {
           "test": {
-            "$1": "test"
-          }
+            "$1": "test",
+            "@@order": ["$1"]
+          },
+          "@@order": ["test"]
         }
       JSON
     end
@@ -50,12 +54,16 @@ module Examples
         {
           "alice": {
             "bob": {
-              "$1": "charlie"
+              "$1": "charlie",
+              "@@order": ["$1"]
             },
             "david": {
-              "$1": "edgar"
-            }
-          }
+              "$1": "edgar",
+              "@@order": ["$1"]
+            },
+            "@@order": ["bob", "david"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -77,13 +85,17 @@ module Examples
           "alice": {
             "bob": [
               {
-                "$1": "charlie"
+                "$1": "charlie",
+                "@@order": ["$1"]
               },
               {
-                "$1": "david"
+                "$1": "david",
+                "@@order": ["$1"]
               }
-            ]
-          }
+            ],
+            "@@order": ["bob"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -104,8 +116,10 @@ module Examples
         {
           "alice": {
             "$1": "bob",
-            "@charlie": "david"
-          }
+            "@charlie": "david",
+            "@@order": ["$1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -125,8 +139,10 @@ module Examples
             "$1": "bob",
             "@xmlns": {
               "$": "http://some-namespace"
-            }
-          }
+            },
+            "@@order": ["$1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -147,8 +163,10 @@ module Examples
             "@xmlns": {
               "$": "http://some-namespace",
               "charlie": "http://some-other-namespace"
-            }
-          }
+            },
+            "@@order": ["$1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -170,12 +188,16 @@ module Examples
               "$": "http://some-namespace"
             },
             "bob": {
-              "$1": "david"
+              "$1": "david",
+              "@@order": ["$1"]
             },
             "charlie:edgar": {
-              "$1": "frank"
-            }
-          }
+              "$1": "frank",
+              "@@order": ["$1"]
+            },
+            "@@order": ["bob", "charlie:edgar"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -197,10 +219,13 @@ module Examples
           "alice": {
             "$1": "bob",
             "charlie": {
-              "$1": "bob2"
+              "$1": "bob2",
+              "@@order": ["$1"]
             },
-            "$2": "bob3"
-          }
+            "$2": "bob3",
+            "@@order": ["$1", "charlie", "$2"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -217,8 +242,10 @@ module Examples
       <<~JSON
         {
           "alice": {
-            "!1": "my comment"
-          }
+            "!1": "my comment",
+            "@@order": ["!1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -237,8 +264,10 @@ module Examples
       <<~JSON
         {
           "alice": {
-            "!1": " my comment "
-          }
+            "!1": " my comment ",
+            "@@order": ["!1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -259,16 +288,21 @@ module Examples
           "alice": {
             "bob": [
               {
-                "$1": "charlie"
+                "$1": "charlie",
+                "@@order": ["$1"]
               },
               {
-                "$1": "david"
+                "$1": "david",
+                "@@order": ["$1"]
               },
               {
-                "$1": "edgar"
+                "$1": "edgar",
+                "@@order": ["$1"]
               }
-            ]
-          }
+            ],
+            "@@order": ["bob"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -291,8 +325,10 @@ module Examples
           "alice": {
             "bob": {
               "@foo": "bar"
-            }
-          }
+            },
+            "@@order": ["bob"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -311,8 +347,10 @@ module Examples
       <<~JSON
         {
           "alice": {
-            "#1": "<bob></bob>"
-          }
+            "#1": "<bob></bob>",
+            "@@order": ["#1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -329,8 +367,10 @@ module Examples
       <<~JSON
         {
           "alice": {
-            "#1": ""
-          }
+            "#1": "",
+            "@@order": ["#1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -347,8 +387,10 @@ module Examples
       <<~JSON
         {
           "alice": {
-            "#1": "   "
-          }
+            "#1": "   ",
+            "@@order": ["#1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -366,9 +408,12 @@ module Examples
         {
           "alice": {
             "bob": {
-              "$1": "charlie"
-            }
-          }
+              "$1": "charlie",
+              "@@order": ["$1"]
+            },
+            "@@order": ["bob"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -393,8 +438,10 @@ module Examples
       <<~JSON
         {
           "alice": {
-            "$1": 1
-          }
+            "$1": 1,
+            "@@order": ["$1"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -418,9 +465,12 @@ module Examples
               "@xmlns": {
                 "$": "http://some-other-namespace"
               },
-              "$1": "charlie"
-            }
-          }
+              "$1": "charlie",
+              "@@order": ["$1"]
+            },
+            "@@order": ["bob"]
+          },
+          "@@order": ["alice"]
         }
       JSON
     end
@@ -442,8 +492,10 @@ module Examples
             "@xmlns": {
               "bob": "http://some-other-namespace"
             },
-            "$1": "charlie"
-          }
+            "$1": "charlie",
+            "@@order": ["$1"]
+          },
+          "@@order": ["bob:alice"]
         }
       JSON
     end
@@ -460,11 +512,14 @@ module Examples
       <<~JSON
         {
           "alice": {
-            "$1": "bob"
+            "$1": "bob",
+            "@@order": ["$1"]
           },
           "charlie": {
-            "$1": "david"
-          }
+            "$1": "david",
+            "@@order": ["$1"]
+          },
+          "@@order": ["alice", "charlie"]
         }
       JSON
     end
@@ -485,14 +540,17 @@ module Examples
             "@xmlns": {
               "bob": "http://some-namespace"
             },
-            "$1": "charlie"
+            "$1": "charlie",
+            "@@order": ["$1"]
           },
           "david:edgar": {
             "@xmlns": {
               "david": "http://some-other-namespace"
             },
-            "$1": "foobar"
-          }
+            "$1": "foobar",
+            "@@order": ["$1"]
+          },
+          "@@order": ["bob:alice", "david:edgar"]
         }
       JSON
     end
@@ -501,6 +559,40 @@ module Examples
       <<-XML
         <bob:alice xmlns:bob="http://some-namespace">charlie</bob:alice>
         <david:edgar xmlns:david="http://some-other-namespace">foobar</david:edgar>
+      XML
+    end
+  end
+
+  class CustomExampleUnsortedJson < ExampleBase
+    def self.test_directions
+      [:json2xml]
+    end
+
+    def self.json
+      <<~JSON
+        {
+          "edgar": {
+            "$1": "bob",
+            "@@order": ["$1"]
+          },
+          "alice": {
+            "charlie": {
+              "$1": "bob2",
+              "@@order": ["$1"]
+            },
+            "$2": "bob3",
+            "$1": "bob",
+            "@@order": ["$1", "charlie", "$2"]
+          },
+          "@@order": ["alice", "edgar"]
+        }
+      JSON
+    end
+
+    def self.xml
+      <<-XML
+        <alice>bob<charlie>bob2</charlie>bob3</alice>
+        <edgar>bob</edgar>
       XML
     end
   end
