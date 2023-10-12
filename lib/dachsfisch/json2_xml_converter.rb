@@ -23,8 +23,8 @@ module Dachsfisch
     def add_element(xml, element)
       return unless element.is_a? Hash
 
-      element.each do |key, value|
-        add_node(xml, key, value) unless key.start_with?('@')
+      element['@@order']&.each do |key|
+        add_node(xml, key, element[key]) unless key.start_with?('@')
       end
     end
 
@@ -44,7 +44,7 @@ module Dachsfisch
     end
 
     def handle_attribute_and_namespaces(node, element)
-      element.keys.filter {|element_key| element_key.start_with?('@') }.each do |attribute_key|
+      element.keys.filter {|element_key| element_key.start_with?(/@[^@]/) }.each do |attribute_key|
         if attribute_key.start_with? '@xmlns'
           element[attribute_key].each do |namespace_key, namespace|
             # add namespace of current scope to node. The root-ns($) gets 'xmlns' as key, named namespaces 'xmlns:name' respectively.
