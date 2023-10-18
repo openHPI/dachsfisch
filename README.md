@@ -22,6 +22,8 @@ The rules for converting XML documents to JSON using Badgerfish are:
 - CDATA sections become properties named `#1`, `#2`, etc.
 
 Please see our [examples](spec/support/examples.rb) for more details. Those rules are derived from [this list](http://dropbox.ashlock.us/open311/json-xml/).
+Own additions:
+- The order of nodes gets saved in `@@order` (JSON is unordered per definition)
 
 ## Installation
 
@@ -53,7 +55,7 @@ json = Dachsfisch::XML2JSONConverter.perform(xml: xml)
 ### JSON-to-XML
 
 ```ruby
-json = '{ "alice": { "$" : "bob" } }'
+json = '{ "alice": { "$1": "bob", "@@order": ["$1"] }, "@@order": ["alice"] }'
 xml = Dachsfisch::JSON2XMLConverter.perform(json: json)
 ```
 
