@@ -32,7 +32,7 @@ module Dachsfisch
       case element
         when Hash
           # underscore is used to disambiguate tag names from ruby methods
-          node = xml.send("#{key}_") { add_element(xml, element) }
+          node = xml.send(:"#{key}_") { add_element(xml, element) }
           handle_attribute_and_namespaces(node, element)
         when Array
           element.each do |sub_element|
