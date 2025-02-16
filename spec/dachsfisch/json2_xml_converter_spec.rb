@@ -14,7 +14,7 @@ RSpec.describe Dachsfisch::JSON2XMLConverter do
       let(:json) { '{"foo": {"bar"}' }
 
       it 'throws an Error' do
-        expect { converter }.to raise_error(Dachsfisch::InvalidJSONInputError, "unexpected token at '{\"foo\": {\"bar\"}'")
+        expect { converter }.to raise_error(Dachsfisch::InvalidJSONInputError, "expected ':' after object key")
       end
     end
 
